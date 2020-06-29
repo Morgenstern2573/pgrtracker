@@ -71,13 +71,13 @@ export default {
   <div class="container">
     <nav class="level add-course-cont">
       <div class="level-item">
-        <div class="add-course-button">
+        <div @click="showDialog = true" class="add-course-button">
           <span
             class="iconify add-course-icon"
             data-icon="mdi-plus-thick"
             data-inline="false"
           ></span>
-          <p @click="showDialog = true">
+          <p>
             Add New Course
           </p>
         </div>
