@@ -15,6 +15,7 @@ export default {
       },
     ],
     link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
+    script: [{ src: "https://code.iconify.design/1/1.0.6/iconify.min.js" }],
   },
   /*
    ** Customize the progress-bar color
@@ -34,7 +35,7 @@ export default {
   modules: ["nuxt-buefy", "@nuxtjs/axios"],
 
   axios: {
-    baseURL: "http://127.0.0.1:5000/",
+    baseURL: "https://pgrtrack.herokuapp.com/",
     credentials: true,
   },
   /*

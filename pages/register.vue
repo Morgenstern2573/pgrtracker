@@ -14,6 +14,9 @@
     </section>
     <p v-on:click="sendForm" class="submit-button" tabindex="-1">Submit</p>
     <p class="error">{{ errorMsg }}</p>
+    <p style="text-align: center">
+      Already have an account? <nuxt-link to="/login">Log In</nuxt-link>
+    </p>
   </div>
 </template>
 
