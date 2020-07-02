@@ -1,6 +1,19 @@
 <template>
-  <div class="sub-cont">
-    <p class="sub-title">{{ capitalize(title) }}</p>
+  <div class="course-cont">
+    <div>
+      <p v-if="id == -1" class="course-title">{{ title }}</p>
+      <nuxt-link
+        v-else
+        :to="{ path: 'goal', query: { id: id } }"
+        class="course-title"
+      >
+        {{ title }}
+      </nuxt-link>
+      <p v-if="status == 1" class="status-text" style="color: #58da5c">
+        Status: Complete
+      </p>
+      <p v-else-if="status == 0" class="status-text">Status: Incomplete</p>
+    </div>
     <div
       v-if="id != '-1'"
       style="display: flex;
@@ -13,21 +26,12 @@
       >
         <span class="iconify icon" data-icon="mdi-trash-can"></span>
       </div>
-      <div class="icon-cont" @click="toggleCompletion" title="mark as complete">
-        <div v-show="stInternalBool">
-          <span
-            style="color: green;"
-            class="iconify icon"
-            data-icon="mdi-check-outline"
-          ></span>
-        </div>
-      </div>
       <div class="delete-dialog" v-show="showDeleteDialog">
         <p class="delete-dialog-header">
-          Are you sure you want to delete this sub course?
+          Are you sure you want to delete this goal?
         </p>
         <div style="display: flex; justify-content: center">
-          <p @click="hideDeleteDialog" class="dialog-button">
+          <p @click="showDeleteDialog = false" class="dialog-button">
             Cancel
           </p>
           <p
@@ -45,71 +49,42 @@
 
 <script>
 export default {
-  props: ["id", "status", "courseId", "title"],
+  props: ["id", "title", "status"],
   data() {
-    return {
-      showDeleteDialog: false,
-      stInternal: this.status,
-      stInternalBool: Boolean(Number(this.status)),
-    };
+    return { showDeleteDialog: false };
   },
   methods: {
-    sendDeleteRequest: async function() {
-      let response = await this.$axios.$delete("/course", {
-        params: { id: this.id },
-      });
-      this.$emit("sc-deleted");
-    },
-    toggleCompletion: async function() {
-      if (this.stInternal == "1") {
-        this.stInternal = "0";
-        this.stInternalBool = false;
-      } else {
-        this.stInternal = "1";
-        this.stInternalBool = true;
-      }
-
-      let form = new FormData();
-      form.set("id", this.id);
-      form.set("status", this.stInternal);
-
-      await this.$axios.$post("/scourse", form);
-    },
-    capitalize: function(str) {
-      if (str != undefined) {
-        return str.replace(/\w\S*/g, (w) =>
-          w.replace(/^\w/, (c) => c.toUpperCase())
-        );
-      }
-    },
-    hideDeleteDialog() {
+    async sendDeleteRequest() {
+      this.$emit("req-sent");
+      let retv = await this.$axios.$delete("/", { params: { id: this.id } });
       this.showDeleteDialog = false;
+      this.$emit("res-arrived");
     },
   },
 };
 </script>
 
 <style>
-.page-header {
-  font-weight: bold;
+.course-cont {
+  margin: 15px auto;
+  padding: 30px;
+  box-shadow: 1px 1px 5px blue;
+  border-radius: 7px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.course-title {
   font-size: x-large;
+  font-weight: bold;
+  color: blue;
+  text-decoration: underline;
+  text-align: left;
   text-transform: capitalize;
 }
 
-.sub-cont {
-  display: flex;
-  justify-content: space-between;
-  width: 80%;
-  margin: 15px auto;
-  box-shadow: 1px 1px 5px blue;
-  padding: 15px;
-  border-radius: 7px;
-}
-
-@media (max-width: 451px) {
-  .sub-cont {
-    width: 100%;
-  }
+p.course-title {
+  text-decoration: none;
 }
 
 .icon-cont {
@@ -169,5 +144,10 @@ svg.iconify.icon {
   border-radius: 7px;
   margin: 0 15px;
   box-shadow: 1px 1px 3px black;
+}
+
+p.status-text {
+  color: #da5858;
+  font-family: monospace;
 }
 </style>

@@ -1,12 +1,7 @@
 <template> </template>
 
 <script>
-import axios from "axios";
-
-const myaxios = axios.create({
-  baseURL: "https://pgrtrack.herokuapp.com/",
-  withCredentials: true,
-});
+import myaxios from "~/lib/myaxios.js";
 
 export default {
   async asyncData({ route }) {

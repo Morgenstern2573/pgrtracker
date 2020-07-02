@@ -43,6 +43,11 @@ export default {
 </script>
 
 <style>
+.field {
+  margin: 30px auto;
+  max-width: 300px;
+}
+
 .page-header {
   font-size: 40px;
   opacity: 0.9;

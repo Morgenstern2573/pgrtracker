@@ -35,7 +35,7 @@ export default {
   modules: ["nuxt-buefy", "@nuxtjs/axios"],
 
   axios: {
-    baseURL: "https://pgrtrack.herokuapp.com/",
+    baseURL: "http://127.0.0.1:5000/",
     credentials: true,
   },
   /*
