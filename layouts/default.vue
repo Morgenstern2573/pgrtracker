@@ -5,7 +5,6 @@
         <nuxt-link to="/" class="level-item logo"> PgrTracker </nuxt-link>
       </div>
       <div class="level-right">
-        <nuxt-link to="/" class="level-item nav-item">Settings</nuxt-link>
         <nuxt-link to="/logout" class="level-item nav-item">Log Out</nuxt-link>
       </div>
     </nav>
@@ -28,6 +27,15 @@ html {
   box-sizing: border-box;
 }
 
+body {
+  color: #676780;
+}
+
+a {
+  width: fit-content;
+  margin: 0 auto !important;
+}
+
 .top-nav {
   padding: 20px;
   box-shadow: 1px 1px 5px blue;
@@ -35,15 +43,15 @@ html {
 
 .logo {
   color: #000;
-  font-size: 25px;
+  font-size: 1.9rem;
   font-weight: bold;
-  margin: 0 15px;
+  padding: 0 15px;
 }
 
 .level-right .nav-item {
   color: blue;
   text-decoration: underline;
-  margin: 0 15px;
+  padding: 0 15px;
   font-size: 17px;
 }
 </style>

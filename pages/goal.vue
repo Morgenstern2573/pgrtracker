@@ -46,7 +46,7 @@ export default {
           params: { id: this.$route.query.id },
         });
         this.subGoals = goalData["subgoals"];
-        await this.toggleCompletion();
+        await this.chkStatus();
       } else {
         this.errorMsg = "Error: " + retv["message"];
       }
@@ -66,6 +66,7 @@ export default {
           console.log("hey there");
           if (this.goalStatus == 1) {
             let form = new FormData();
+            form.set("type", "status");
             form.set("id", this.$route.query.id);
             form.set("status", 0);
             await this.$axios.patch("/goal", form);
@@ -81,6 +82,7 @@ export default {
       console.log("what now?!");
       if (this.goalStatus == 0) {
         let form = new FormData();
+        form.set("type", "status");
         form.set("id", this.$route.query.id);
         form.set("status", 1);
         await this.$axios.$patch("/goal", form);
@@ -92,9 +94,9 @@ export default {
         return;
       }
     },
-    toggleCompletion: async function() {
-      await this.refreshsubGoals();
+    handleCompEvent: async function() {
       this.showLoader = false;
+      await this.refreshsubGoals();
       await this.chkStatus();
     },
   },
@@ -115,10 +117,10 @@ export default {
         @click="showsubGoalDialog = !showsubGoalDialog"
       >
         <span class="iconify add-course-icon" data-icon="mdi-plus-thick"></span>
-        Add New subGoal
+        Add New SubGoal
       </p>
       <div v-show="showsubGoalDialog" class="add-subGoal-dialog">
-        <p class="dialog-header">Add New subGoal</p>
+        <p class="dialog-header">Add New SubGoal</p>
         <b-input
           v-model="newsubGoalTitle"
           type="text"
@@ -153,19 +155,22 @@ export default {
       :title="subGoal[2]"
       :status="subGoal[3]"
       @delete-req="showLoader = true"
-      @deleted="
-        showLoader = false;
-        refreshsubGoals();
-      "
+      @deleted="handleCompEvent"
       @update-req="showLoader = true"
-      @st-update="toggleCompletion"
+      @st-update="handleCompEvent"
     ></subGoal>
   </div>
 </template>
 
-<style>
+<style scoped>
 .container {
   padding: 0 30px;
+}
+
+.page-header {
+  font-size: 1.4rem;
+  text-transform: capitalize;
+  font-weight: bold;
 }
 
 .status-text {
@@ -183,7 +188,7 @@ export default {
 .add-subGoal-button {
   width: fit-content;
   margin: 15px auto;
-  box-shadow: 1px 1px 5px blue;
+  box-shadow: 1px 1px 5px #9595b1c4;
   border-radius: 5px;
   padding: 10px;
   font-weight: bold;
