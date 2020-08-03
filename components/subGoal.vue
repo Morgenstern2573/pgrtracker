@@ -96,7 +96,7 @@ export default {
 
 <style>
 .--red__BG {
-  background-color: #910707;
+  background-color: #910707 !important;
 }
 </style>
 

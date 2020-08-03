@@ -343,7 +343,7 @@ export default {
 
 <style scoped>
 .--red__BG {
-  background-color: #910707;
+  background-color: #910707 !important;
 }
 
 .btn:hover {
