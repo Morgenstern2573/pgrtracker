@@ -15,10 +15,14 @@ import {
 } from "~/lib/api.js";
 
 export default {
-  async asyncData() {
+  async asyncData({ redirect }) {
     await requireLogin();
 
     let g = await getAllGoalData();
+
+    // if (g.status == "error") {
+    //   redirect("/login");
+    // }
 
     if (g["has_goals"] == true) {
       if (g["has_subgoals"] == false) {

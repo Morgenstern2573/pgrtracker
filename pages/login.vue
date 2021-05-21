@@ -11,11 +11,6 @@ export default {
     async sendForm() {
       console.log("hey!");
       this.isLoading = true;
-      let form = new FormData();
-      form.append("username", this.username);
-      form.append("password", this.password);
-      let res = await this.$axios.$post("/auth/login", form);
-      this.isLoading = false;
       //validating input values
       let resA = validate(this.username, undefined, "username");
       let resB = validate(this.password, undefined, "password");
@@ -26,6 +21,12 @@ export default {
         this.errorMsg = "Error: " + resB["message"];
         return;
       }
+
+      let form = new FormData();
+      form.append("username", this.username);
+      form.append("password", this.password);
+      let res = await this.$axios.$post("/auth/login", form);
+      this.isLoading = false;
 
       if (res["status"] == "error") {
         this.errorMsg = "Error: " + res["message"];
